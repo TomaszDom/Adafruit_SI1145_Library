@@ -91,7 +91,7 @@ boolean Adafruit_SI1145::begin(uint8_t addr,TwoWire* pBus) {
   write8(SI1145_REG_MEASRATE0, 0xFF); // 255 * 31.25uS = 8ms
   
   // auto run
-  write8(SI1145_REG_COMMAND, SI1145_PSALS_AUTO);
+  write8(SI1145_REG_COMMAND, SI1145_PSALS_FORCE);
 
   return true;
 }

@@ -1,3 +1,5 @@
+This fork switches the sensor into Forced Mode, for deep sleep battery/solar powered implementations.
+
 This is a library for the Si1145 UV/IR/Visible Light Sensor
 
 Designed specifically to work with the Si1145 sensor in the adafruit shop
