@@ -87,11 +87,17 @@ boolean Adafruit_SI1145::begin(uint8_t addr,TwoWire* pBus) {
 
 /************************/
 
-  // measurement rate for auto
-  write8(SI1145_REG_MEASRATE0, 0xFF); // 255 * 31.25uS = 8ms
-  
-  // auto run
-  write8(SI1145_REG_COMMAND, SI1145_PSALS_FORCE);
+  // Set the module in Forced mode
+  // The parameter MEAS_RATE, when zero, places the internal sequencer in Forced Measurement mode.
+  // Measurement rate
+  write8(SI1145_REG_MEASRATE0, 0x00);
+  write8(SI1145_REG_MEASRATE1, 0x00);
+    
+  // Write 0 to the command register = NOP command
+  write8(SI1145_REG_COMMAND, SI1145_NOP);
+    
+  // Put the module in ALS force mode
+  write8(SI1145_REG_COMMAND, SI1145_ALS_FORCE);
 
   return true;
 }
@@ -117,21 +123,29 @@ void Adafruit_SI1145::reset() {
 
 // returns the UV index * 100 (divide by 100 to get the index)
 uint16_t Adafruit_SI1145::readUV(void) {
+ write8(SI1145_REG_COMMAND, SI1145_ALS_FORCE);
+ delay(20);
  return read16(0x2C); 
 }
 
 // returns visible+IR light levels
 uint16_t Adafruit_SI1145::readVisible(void) {
+ write8(SI1145_REG_COMMAND, SI1145_ALS_FORCE);
+ delay(20);
  return read16(0x22); 
 }
 
 // returns IR light levels
 uint16_t Adafruit_SI1145::readIR(void) {
+ write8(SI1145_REG_COMMAND, SI1145_ALS_FORCE);
+ delay(20);
  return read16(0x24); 
 }
 
 // returns "Proximity" - assumes an IR LED is attached to LED
 uint16_t Adafruit_SI1145::readProx(void) {
+ write8(SI1145_REG_COMMAND, SI1145_ALS_FORCE);
+ delay(20);
  return read16(0x26); 
 }
 
